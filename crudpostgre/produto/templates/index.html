@@ -4,22 +4,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pipizinho</title>
+    <title>Produto</title>
 </head>
-<body>
+<body onload="get_produto()">
     <h1>Produtos</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="nome">Nome:</label><br>
-        {{ produtoForm.nome }}<br><br>
+    <hr>
+    <div id="produtos-area">
+        {% for produto in produto_list %}
+    <div>
         
-        <label for="descricao">Descrição:</label><br>
-        {{ produtoForm.descricao }}<br><br>
-        
-        <label for="preco">Preço:</label><br>
-        {{ produtoForm.preco }}<br><br>
-        
-        <button type="submit">Enviar</button>
-    </form>
+        Nome:
+        {{ produto.nome }}
+        <br><br>
+        Descrição:
+        {{produto.descricao}}
+        <br><br>
+        Preço:
+        {{ produto.preco }} Reais
+        <br><br>
+        <button onclick="deletar('{{ produto.id }}')">Excluir</button>
+        <hr>
+    </div>
+        {% endfor %}
+    <a href="{% url 'adicionar' %}"><button>Adicionar</button></a>
+    </div>
 </body>
+<script>
+    function deletar(id){
+        let httpRequest = new XMLHttpRequest();
+        httpRequest.open('DELETE', "{% url 'excluir' id='REPLACE_ID'%}".replace("REPLACE_ID", id));
+        httpRequest.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === XMLHttpRequest.DONE) {
+                if(httpRequest.status === 200) {
+                    console.log(httpRequest.status);
+                } else {
+                    alert(`Deu ruim! Status ${httpRequest.status}`);
+                }
+            }        
+        };
+        httpRequest.send()
+    }
+</script>
 </html>

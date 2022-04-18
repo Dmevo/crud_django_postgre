@@ -19,5 +19,7 @@ from produto import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.index, name="index")
-]
+    path('', views.index, name="index"),
+    path('adicionar/', views.adicionar_produto, name="adicionar"),
+    path('excluir/<id>/', views.excluir_produto, name="excluir"),
+    ]
