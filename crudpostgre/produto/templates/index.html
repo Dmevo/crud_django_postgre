@@ -22,7 +22,7 @@
         Preço:
         {{ produto.preco }} Reais
         <br><br>
-        <button onclick="deletar('{{ produto.id }}')">Excluir</button>
+        <button onclick="deletar('{{ produto.id }}')">Excluir</button> <a href="{% url 'alterar' produto.id %}"><button>Alterar</button></a>
         <hr>
     </div>
         {% endfor %}

@@ -22,4 +22,5 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('adicionar/', views.adicionar_produto, name="adicionar"),
     path('excluir/<id>/', views.excluir_produto, name="excluir"),
+    path('alterar/<id>/', views.alterar_produto, name="alterar")
     ]
